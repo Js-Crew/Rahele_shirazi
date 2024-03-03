@@ -78,3 +78,49 @@ textarea::placeholder {
     color: gold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+/* storage for display lists note */
+.listLi{
+    width: 500px;
+    
+    margin: 1% auto;
+    color: aliceblue;
+    font-weight: 900;
+}
+/* styling li */
+li{
+    list-style-type: none;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    text-align: left;
+    padding: 8px;
+    margin-top: 10px;
+    
+}
+/* yeki dar mion rangesh avaz she */
+ul#notes-list li:nth-child(odd) {
+    background-color: #d6c104; /* Change this color as needed */
+    color: black;
+}
+
+ul#notes-list li:nth-child(even) {
+    background-color: #d3073d; /* Change this color as needed */
+    color: black;
+}
+/* style button remove */
+#removeBtn{
+    background-color: transparent;
+    width: 20px;
+    border: 2px solid black;
+    float: right;
+    color: #000000;
+    font-weight: 900;
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+    text-align: center;
+}
