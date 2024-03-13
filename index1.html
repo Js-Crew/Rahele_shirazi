@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>note</title>
+</head>
+
+<body>
+    <input type="text" id="text" placeholder="text">
+    <button id="btn">send</button>
+
+    <script>
+        let input = document.getElementById('text'),
+            btn = document.getElementById('btn');
+            let array=[]
+btn.addEventListener("click",()=>{
+    // get value input
+let user=input.value;
+array.push(user)
+console.log(array)
+input.value=""
+let daye= new Date()
+let object={
+    notebook:user,
+    
+}
+})

@@ -1,56 +1,93 @@
-let
-  blokSize = 25,
-  rows = 20,
-  cols = 20,
-  board,
-  context,
-  snakeX = blokSize * 5,
-  snakeY = blokSize * 5,
-  foodX,
-  foodY,
-  velocityX = 0,
-  velocityY = 0
-  ;
+// get value input
+const textArea = document.querySelector('#textarea');
 
-window.onload = function () {
-  board = document.getElementById('board');
-  board.heigth = rows * blokSize;
-  board.width = cols * blokSize;
-  context = board.getContext('2d');
-  placeFood()
-  document.addEventListener("keyup", changeDirection)
-  // update()
-  setInterval(update, 1000 / 10)
+function getText() {
+  return textArea.value;
 }
-function changeDirection(e) {
-  if (e.code == "ArrowUp") {
-    velocityX = 0
-    velocityX = -1
-  }
-  else if (e.code == "ArrowDown") {
-    velocityX = 0
-    velocityX = 1
-  }
-  else if (e.code == "ArrowLeft") {
-    velocityX = -1
-    velocityX = 0
-  }
-  else if (e.code == "ArrowRigth") {
-    velocityX = 1
-    velocityX = 0
-  }
+// step2
+// get variabel
+const list = document.querySelector('#list');
+// function addlist to page note
+function addToList(text) {
+  const li = document.createElement('li');
+  li.textContent = text;
+  li.dataset.id = Math.random().toString(36).substring(7); // ایجاد شناسه تصادفی
+  list.body.appendChild(li);
+
+  // save in localStorage
+  const notes = getNotesFromLocalStorage();
+  notes.push({
+    id: li.dataset.id,
+    text: text,
+  });
+  localStorage.setItem('notes', JSON.stringify(notes));
 }
-function update() {
-  context.fillstyle = 'black';
-  context.fillRact(0, 0, board.width, board.heigth)
-  context.fillstyle = "lime";
-  snakeX += velocityX;
-  context.fillRact(snakeX, snakeY, blokSize, blokSize);
-  context.fillstyle = "red"
-  context.fillRact(foodX, foodY, blokSize, blokSize)
+// step3
+// show list to page
+function showList() {
+  const notes = getNotesFromLocalStorage();
+  notes.forEach((note) => {
+    const li = document.createElement('li');
+    li.textContent = note.text;
+    li.dataset.id = note.id;
+    list.appendChild(li);
+  });
 }
 
-function placeFood() {
-  foodX = Math.floor(Math.random() * cols) * blokSize;
-  foodY = Math.floor(Math.random() * rows) * blokSize;
+showList();
+// step4
+// delete note list
+list.addEventListener('click', (event) => {
+  if (event.target.tagName === 'LI') {
+    const li = event.target;
+    const id = li.dataset.id;
+
+    // delete list
+    li.remove();
+
+    // delete to localStorage
+    const notes = getNotesFromLocalStorage();
+    const filteredNotes = notes.filter((note) => note.id !== id);
+    localStorage.setItem('notes', JSON.stringify(filteredNotes));
+  }
+});
+// step 5
+// select note, edite
+list.addEventListener('dblclick', (event) => {
+  if (event.target.tagName === 'LI') {
+    const li = event.target;
+    const id = li.dataset.id;
+    const text = li.textContent;
+
+    // replace with textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.dataset.id = id;
+    li.replaceWith(textarea);
+
+    // save text new
+    textarea.addEventListener('blur', (event) => {
+      const newText = event.target.value;
+      const id = event.target.dataset.id;
+
+      // update list
+      li.textContent = newText;
+      li.replaceWith(textarea);
+
+      // uppdate localStorage
+      const notes = getNotesFromLocalStorage();
+      const note = notes.find((note) => note.id === id);
+      note.text = newText;
+      localStorage.setItem('notes', JSON.stringify(notes));
+    });
+  }
+});
+// step6
+// Auxiliary functions
+function getNotesFromLocalStorage() {
+  const notes = localStorage.getItem('notes');
+  return notes ? JSON.parse(notes) : [];
 }
+
+
+

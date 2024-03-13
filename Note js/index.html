@@ -1,63 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>note</title>
+    <title> notebook</title>
 </head>
 
 <body>
-    <input type="text" id="text" placeholder="text">
-    <button id="btn">send</button>
+    <h1>notebook</h1>
+    <textarea id="textarea" placeholder="enter text"></textarea>
+    <button onclick="addToList(getText())">add to list </button>
+    <ul id="list"></ul>
 
-    <script>
-        let input = document.getElementById('text'),
-            btn = document.getElementById('btn');
-            let array=[]
-btn.addEventListener("click",()=>{
-    // get value input
-let user=input.value;
-array.push(user)
-console.log(array)
-input.value=""
-let daye= new Date()
-let object={
-    notebook:user,
-    id=date
-}
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // document.addEventListener("click", clickBtn);
-        // let array=[]
-        // function clickBtn(e) {
-            
-        //     let user = input.value;
-        //     array.push(user)
-        // }
-        // console.log(user)
-
-
-
-
-
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
