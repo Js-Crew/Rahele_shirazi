@@ -1,30 +1,63 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note</title>
-    <!-- putting link css -->
-    <link rel="stylesheet" href="./style.css">
+    <title>note</title>
 </head>
 
 <body>
-    <!-- storage for elements -->
-    <div class="container">
-        <h2>Note 1402</h2>
-        <form action="#" method="get">
-            <textarea id="user" cols="25" rows="4" placeholder="Enter your desired text..."></textarea>
+    <input type="text" id="text" placeholder="text">
+    <button id="btn">send</button>
 
-            <button id="btn">send</button>
-        </form>
+    <script>
+        let input = document.getElementById('text'),
+            btn = document.getElementById('btn');
+            let array=[]
+btn.addEventListener("click",()=>{
+    // get value input
+let user=input.value;
+array.push(user)
+console.log(array)
+input.value=""
+let daye= new Date()
+let object={
+    notebook:user,
+    id=date
+}
+})
 
-    </div>
-    <div class="listLi">
-        <ul id="notes-list"></ul>
-    </div>
 
-    <script src="app.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // document.addEventListener("click", clickBtn);
+        // let array=[]
+        // function clickBtn(e) {
+            
+        //     let user = input.value;
+        //     array.push(user)
+        // }
+        // console.log(user)
+
+
+
+
+
+    </script>
 </body>
 
 </html>

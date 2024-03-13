@@ -1,89 +1,56 @@
-// Get variables
-const btn = document.getElementById("btn");
-const textarea = document.getElementById("user");
-const notesList = document.getElementById("notes-list"); // دریافت عنصر ul
+let
+  blokSize = 25,
+  rows = 20,
+  cols = 20,
+  board,
+  context,
+  snakeX = blokSize * 5,
+  snakeY = blokSize * 5,
+  foodX,
+  foodY,
+  velocityX = 0,
+  velocityY = 0
+  ;
 
-// Get the button and display the click operation
-btn.addEventListener("click", function(event) {
-  event.preventDefault();
-  const noteText = textarea.value.trim();
-
-  // If text is not empty, create the li element for the list
-  if (noteText !== "") {
-    const listItem = document.createElement("li");
-    listItem.textContent = noteText;
-
-    //Add a delete button inside the list element
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-    deleteBtn.id = "removeBtn";
-    deleteBtn.addEventListener("click", function() {
-      //Delete the clicked list item
-      notesList.removeChild(listItem);
-      // delete from localStorage
-      removeFromLocalStorage(noteText);
-    });
-
-    listItem.appendChild(deleteBtn);
-
-    notesList.appendChild(listItem);
-    textarea.value = "";
-    // save in localStorage
-    saveToLocalStorage(noteText);
-  } else {
-    // If the text is empty, an error message will be displayed
-    alert("Enter your desired text.");
-  }
-});
-
-// save in localStorage
-function saveToLocalStorage(noteText) {
-  const notes = getNotesFromLocalStorage();
-  notes.push(noteText);
-  localStorage.setItem("notes", JSON.stringify(notes));
+window.onload = function () {
+  board = document.getElementById('board');
+  board.heigth = rows * blokSize;
+  board.width = cols * blokSize;
+  context = board.getContext('2d');
+  placeFood()
+  document.addEventListener("keyup", changeDirection)
+  // update()
+  setInterval(update, 1000 / 10)
 }
-
-// get data from localStorage
-function getNotesFromLocalStorage() {
-  const notesJSON = localStorage.getItem("notes");
-  if (notesJSON === null) {
-    return [];
-  } else {
-    return JSON.parse(notesJSON);
+function changeDirection(e) {
+  if (e.code == "ArrowUp") {
+    velocityX = 0
+    velocityX = -1
+  }
+  else if (e.code == "ArrowDown") {
+    velocityX = 0
+    velocityX = 1
+  }
+  else if (e.code == "ArrowLeft") {
+    velocityX = -1
+    velocityX = 0
+  }
+  else if (e.code == "ArrowRigth") {
+    velocityX = 1
+    velocityX = 0
   }
 }
-
-// Display the list saved in localStorage
-function displayNotes() {
-  const notes = getNotesFromLocalStorage();
-  notes.forEach(noteText => {
-    const listItem = document.createElement("li");
-    listItem.textContent = noteText;
-
-    // Add a delete button inside the list element
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-    deleteBtn.id = "removeBtn";
-    deleteBtn.addEventListener("click", function() {
-      //Delete the clicked list item
-      notesList.removeChild(listItem);
-      // delete from localStorage
-      removeFromLocalStorage(noteText);
-    });
-
-    listItem.appendChild(deleteBtn);
-
-    notesList.appendChild(listItem);
-  });
+function update() {
+  context.fillstyle = 'black';
+  context.fillRact(0, 0, board.width, board.heigth)
+  context.fillstyle = "lime";
+  snakeX += velocityX;
+  context.fillRact(snakeX, snakeY, blokSize, blokSize);
+  context.fillstyle = "red"
+  context.fillRact(foodX, foodY, blokSize, blokSize)
 }
 
-// delete from localStorage
-function removeFromLocalStorage(noteText) {
-  const notes = getNotesFromLocalStorage();
-  const noteIndex = notes.indexOf(noteText);
-  notes.splice(noteIndex, 1);
-  localStorage.setItem("notes", JSON.stringify(notes));
+function placeFood() {
+  foodX = Math.floor(Math.random() * cols) * blokSize;
+  foodY = Math.floor(Math.random() * rows) * blokSize;
 }
-
-// Display the saved list at the beginning of page loading
-displayNotes();
